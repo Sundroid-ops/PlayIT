@@ -1,5 +1,8 @@
 package com.project.playit.Auth.Controller;
 
+import lombok.Data;
+
+@Data
 public class RegisterRequest {
     private String userName;
 
