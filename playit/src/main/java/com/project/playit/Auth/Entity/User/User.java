@@ -1,9 +1,6 @@
 package com.project.playit.Auth.Entity.User;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -46,6 +43,9 @@ public class User implements UserDetails {
     @NotBlank(message = "Password cannot be empty")
     @Length(min = 5, max = 15, message = "Password should have more than 4 and less than 16 character")
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
