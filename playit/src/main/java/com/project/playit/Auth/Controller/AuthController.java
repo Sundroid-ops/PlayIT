@@ -21,6 +21,6 @@ public class AuthController {
 
     @PostMapping("/authenticate")
     public void authenticate(@RequestBody AuthenticateRequest request){
-
+        authService.authenticate(request);
     }
 }

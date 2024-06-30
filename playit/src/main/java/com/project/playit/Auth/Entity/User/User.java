@@ -37,7 +37,7 @@ public class User implements UserDetails {
     @NotBlank(message = "Email cannot be empty")
     @Email(message = "Email should be valid")
     @Column(unique = true)
-    private String email;
+    private String emailID;
 
     @NotNull(message = "Password is required")
     @NotBlank(message = "Password cannot be empty")
@@ -59,7 +59,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return emailID;
     }
 
     @Override
