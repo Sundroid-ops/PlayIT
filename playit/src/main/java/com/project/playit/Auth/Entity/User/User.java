@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,8 @@ import java.util.UUID;
 @Data
 @Builder
 @Table(name = "_user")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -41,7 +45,6 @@ public class User implements UserDetails {
 
     @NotNull(message = "Password is required")
     @NotBlank(message = "Password cannot be empty")
-    @Length(min = 5, max = 15, message = "Password should have more than 4 and less than 16 character")
     private String password;
 
     @Enumerated(EnumType.STRING)

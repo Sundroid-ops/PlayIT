@@ -2,10 +2,7 @@ package com.project.playit.Auth.Controller;
 
 import com.project.playit.Auth.Service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -15,12 +12,12 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public void register(@RequestBody RegisterRequest request){
-        authService.register(request);
+    public String register(@RequestBody RegisterRequest request){
+        return authService.register(request);
     }
 
     @PostMapping("/authenticate")
-    public void authenticate(@RequestBody AuthenticateRequest request){
-        authService.authenticate(request);
+    public String authenticate(@RequestBody AuthenticateRequest request){
+        return authService.authenticate(request);
     }
 }

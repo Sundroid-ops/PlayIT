@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class AuthServiceImpl implements AuthService{
 
@@ -28,8 +30,9 @@ public class AuthServiceImpl implements AuthService{
     private AuthenticationManager authenticationManager;
 
     @Override
-    public void register(RegisterRequest request){
+    public String register(RegisterRequest request){
         User user = User.builder()
+                .ID(UUID.randomUUID())
                 .userName(request.getUserName())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -40,11 +43,11 @@ public class AuthServiceImpl implements AuthService{
 
         userRepository.save(user);
 
-        jwtService.generateToken(user);
+        return jwtService.generateToken(user);
     }
 
     @Override
-    public void authenticate(AuthenticateRequest request) {
+    public String authenticate(AuthenticateRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmailID(),
@@ -55,6 +58,6 @@ public class AuthServiceImpl implements AuthService{
         var user = userRepository.findByEmailID(request.getEmailID())
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
 
-        jwtService.generateToken(user);
+        return jwtService.generateToken(user);
     }
 }

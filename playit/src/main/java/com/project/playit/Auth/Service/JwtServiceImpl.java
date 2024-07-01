@@ -16,7 +16,7 @@ import java.util.function.Function;
 @Service
 public class JwtServiceImpl implements JwtService{
 
-    @Value("${jwt.secret_key}")
+    @Value("${jwt.secret.key}")
     private String secret_key;
 
     @Override
@@ -44,12 +44,12 @@ public class JwtServiceImpl implements JwtService{
     }
 
     @Override
-    public void generateToken(UserDetails userDetails) {
-        Jwts.builder()
+    public String generateToken(UserDetails userDetails) {
+        return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 24)))
-                .signWith(getSignInKey(), SignatureAlgorithm.ES256)
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
