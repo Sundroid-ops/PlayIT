@@ -28,6 +28,11 @@ public class JwtServiceImpl implements JwtService{
         return claimsResolver.apply(claims);
     }
 
+    @Override
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        return userDetails.getUsername().equals(extractUserName(token)) && !isTokenExpiration(token);
+    }
+
     public boolean isTokenExpiration(String token) {
         return extractExpiration(token).before(new Date());
     }
