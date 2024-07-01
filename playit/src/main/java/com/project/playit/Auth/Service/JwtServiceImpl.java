@@ -10,11 +10,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.function.Function;
 
 public class JwtServiceImpl implements JwtService{
 
     @Value("${jwt.secret_key}")
     private String secret_key;
+
+    @Override
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
 
     @Override
     public void generateToken(UserDetails userDetails) {
