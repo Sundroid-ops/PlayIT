@@ -4,10 +4,13 @@ import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Key;
+import java.util.Date;
 import java.util.function.Function;
 
 public interface JwtService {
     public void generateToken(UserDetails userDetails);
+
+    public Date extractExpiration(String token);
 
     public String extractUserName(String token);
 
