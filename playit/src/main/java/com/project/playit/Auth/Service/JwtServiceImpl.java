@@ -18,6 +18,11 @@ public class JwtServiceImpl implements JwtService{
     private String secret_key;
 
     @Override
+    public String extractUserName(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    @Override
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);

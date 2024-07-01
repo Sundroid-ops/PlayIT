@@ -9,5 +9,7 @@ import java.util.function.Function;
 public interface JwtService {
     public void generateToken(UserDetails userDetails);
 
+    public String extractUserName(String token);
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver);
 }
