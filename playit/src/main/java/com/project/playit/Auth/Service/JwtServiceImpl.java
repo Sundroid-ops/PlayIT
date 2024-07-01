@@ -28,8 +28,11 @@ public class JwtServiceImpl implements JwtService{
         return claimsResolver.apply(claims);
     }
 
-    @Override
-    public Date extractExpiration(String token) {
+    public boolean isTokenExpiration(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
