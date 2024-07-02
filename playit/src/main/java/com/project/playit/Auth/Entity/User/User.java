@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
+
 import java.util.Collection;
 import java.util.UUID;
 
@@ -20,6 +22,7 @@ import java.util.UUID;
 @Table(name = "_user")
 @NoArgsConstructor
 @AllArgsConstructor
+@Validated
 public class User implements UserDetails {
 
     @Id
