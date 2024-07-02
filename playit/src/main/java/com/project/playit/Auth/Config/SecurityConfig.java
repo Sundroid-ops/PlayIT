@@ -1,5 +1,6 @@
 package com.project.playit.Auth.Config;
 
+import com.project.playit.Auth.Filter.JwtAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

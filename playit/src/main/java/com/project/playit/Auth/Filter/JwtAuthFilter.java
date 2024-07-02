@@ -1,4 +1,4 @@
-package com.project.playit.Auth.Config;
+package com.project.playit.Auth.Filter;
 
 import com.project.playit.Auth.Service.JwtService;
 import jakarta.servlet.FilterChain;
