@@ -1,5 +1,6 @@
 package com.project.playit.Auth.Entity.User;
 
+import com.project.playit.project.Entity.Song;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -26,7 +27,7 @@ import java.util.UUID;
 public class User implements UserDetails {
 
     @Id
-    private UUID ID;
+    private UUID userID;
 
     @NotBlank(message = "UserName cannot be empty")
     @Column(unique = true)

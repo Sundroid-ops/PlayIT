@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public String register(RegisterRequest request){
         User user = User.builder()
-                .ID(UUID.randomUUID())
+                .userID(UUID.randomUUID())
                 .userName(request.getUserName())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
-    public String authenticate(AuthenticateRequest request) {
+    public String authenticate(AuthenticateRequest request) throws UsernameNotFoundException{
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmailID(),
