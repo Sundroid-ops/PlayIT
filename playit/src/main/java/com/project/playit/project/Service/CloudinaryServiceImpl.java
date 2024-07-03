@@ -18,13 +18,13 @@ public class CloudinaryServiceImpl implements CloudinaryService{
     private Cloudinary cloudinary;
 
     @Override
-    public ResponseEntity<String> uploadAudioFile(MultipartFile file, String folderName) {
+    public String uploadAudioFile(MultipartFile file, String folderName) {
         try {
             Map<Object, Object> options = new HashMap<>();
             options.put("songs", folderName);
             Map uploadFile = cloudinary.uploader().upload(file.getBytes(), options);
             String publicID = (String) uploadFile.get("public_id");
-            return ResponseEntity.ok(cloudinary.url().secure(true).generate(publicID));
+            return cloudinary.url().secure(true).generate(publicID);
 
         }catch (IOException e){
             e.printStackTrace();

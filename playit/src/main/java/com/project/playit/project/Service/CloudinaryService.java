@@ -5,5 +5,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface CloudinaryService {
 
-    public ResponseEntity<String> uploadAudioFile(MultipartFile file, String folderName);
+    public String uploadAudioFile(MultipartFile file, String folderName);
 }
