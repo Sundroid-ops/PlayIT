@@ -32,7 +32,7 @@ public class Song {
     @Column(unique = true)
     private String file_url;
 
-    @OneToOne(
+    @ManyToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
             optional = false
