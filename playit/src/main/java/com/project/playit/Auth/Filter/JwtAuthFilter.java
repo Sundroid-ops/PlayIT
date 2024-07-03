@@ -1,6 +1,7 @@
 package com.project.playit.Auth.Filter;
 
 import com.project.playit.Auth.Service.JwtService;
+import com.project.playit.Auth.Service.CurrentUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +26,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private CurrentUserService userService;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request,
@@ -59,6 +63,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
 
+                userService.setCurrentUser(userDetails);
             }
         }
 
