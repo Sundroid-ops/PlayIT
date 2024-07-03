@@ -18,7 +18,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "_song")
 @Validated
-public class Song {
+public class Audio {
 
     @Id
     private UUID songID;
