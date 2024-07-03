@@ -1,4 +1,4 @@
-package com.project.playit.Auth.Controller;
+package com.project.playit.Auth.DTO;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;

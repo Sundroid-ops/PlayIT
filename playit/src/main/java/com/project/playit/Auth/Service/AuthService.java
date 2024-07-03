@@ -1,7 +1,7 @@
 package com.project.playit.Auth.Service;
 
-import com.project.playit.Auth.Controller.AuthenticateRequest;
-import com.project.playit.Auth.Controller.RegisterRequest;
+import com.project.playit.Auth.DTO.AuthenticateRequest;
+import com.project.playit.Auth.DTO.RegisterRequest;
 
 public interface AuthService {
     public String register(RegisterRequest request);

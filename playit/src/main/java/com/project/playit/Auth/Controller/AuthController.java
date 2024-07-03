@@ -1,5 +1,7 @@
 package com.project.playit.Auth.Controller;
 
+import com.project.playit.Auth.DTO.AuthenticateRequest;
+import com.project.playit.Auth.DTO.RegisterRequest;
 import com.project.playit.Auth.Service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
