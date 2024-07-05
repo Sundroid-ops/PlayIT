@@ -9,7 +9,6 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -32,7 +31,11 @@ public class Audio {
 
     @NotNull(message = "url cannot be null")
     @Column(unique = true)
-    private String file_url;
+    private String cloudinary_file_url;
+
+    @NotNull(message = "url cannot be null")
+    @Column(unique = true)
+    private String cloudinary_file_public_id;
 
     @ManyToOne(
             cascade = CascadeType.ALL,
