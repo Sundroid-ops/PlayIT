@@ -9,8 +9,8 @@ import com.project.playit.project.Repository.AudioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,6 +33,8 @@ public class AudioServiceImpl implements AudioService {
                 .audioName(request.getName())
                 .file_url(cloudinaryService.uploadAudioFile(request.getFile(), request.getName()))
                 .user_upload(currentUserService.getCurrentUser())
+                .genre(request.getGenre())
+                .releaseDate(LocalDate.now())
                 .build();
 
         return audioRepository.save(song);
