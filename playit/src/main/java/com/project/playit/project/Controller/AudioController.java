@@ -26,8 +26,12 @@ public class AudioController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Audio>> getAudioListByAudioName(@RequestParam(name = "name") String audioName) throws AudioFileNotFoundException {
-        return ResponseEntity.ok(audioService.getAudioListFromAudioName(audioName));
+    public ResponseEntity<List<Audio>> getAudioListByAudioName(
+            @RequestParam(name = "name") String audioName,
+            @RequestParam(name = "page") int page,
+            @RequestParam(name = "size") int size
+            ) throws AudioFileNotFoundException {
+        return ResponseEntity.ok(audioService.getAudioListFromAudioName(audioName, page, size));
     }
 
 }
