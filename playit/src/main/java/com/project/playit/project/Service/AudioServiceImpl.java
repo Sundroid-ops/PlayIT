@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -29,10 +30,13 @@ public class AudioServiceImpl implements AudioService {
     @Override
     public Audio uploadAudioFile(AudioUploadRequest request){
 
+        Map<String, String> uploadFileData =  cloudinaryService.uploadAudioFile(request.getFile(), request.getName());
+
         Audio song = Audio.builder()
                 .audioID(UUID.randomUUID())
                 .audioName(request.getName())
-                .file_url(cloudinaryService.uploadAudioFile(request.getFile(), request.getName()))
+                .cloudinary_file_url(uploadFileData.get("file_url"))
+                .cloudinary_file_public_id(uploadFileData.get("public_id"))
                 .user_upload(currentUserService.getCurrentUser())
                 .genre(request.getGenre())
                 .releaseDate(LocalDate.now())
