@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -45,12 +46,9 @@ public class Audio {
     private User user_upload;
 
     @NotNull(message = "genre cannot be null")
-    @NotBlank(message = "genre cannot be empty")
     @Enumerated(EnumType.STRING)
     private Genre genre;
 
     @NotNull(message = "genre cannot be null")
-    @NotBlank(message = "genre cannot be empty")
-    @Temporal(TemporalType.DATE)
-    private Date releaseDate;
+    private LocalDate releaseDate;
 }
