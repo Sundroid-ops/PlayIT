@@ -9,5 +9,5 @@ import java.util.List;
 public interface AudioService {
     public Audio uploadAudioFile(AudioUploadRequest request);
 
-    public List<Audio> getAudioListFromAudioName(String audioName) throws AudioFileNotFoundException;
+    public List<Audio> getAudioListFromAudioName(String audioName, int page, int size) throws AudioFileNotFoundException;
 }
