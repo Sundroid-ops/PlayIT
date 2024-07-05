@@ -7,6 +7,7 @@ import com.project.playit.project.Exception.AudioFileNotFoundException;
 import com.project.playit.project.Repository.AudioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -48,5 +49,11 @@ public class AudioServiceImpl implements AudioService {
             throw new AudioFileNotFoundException("Audio Not Found");
 
         return audioList;
+    }
+
+    @Override
+    public Audio getAudioByID(UUID ID) {
+        return audioRepository.findById(ID)
+                .orElseThrow((() -> new UsernameNotFoundException("Audio Not Found for ID : " + ID)));
     }
 }

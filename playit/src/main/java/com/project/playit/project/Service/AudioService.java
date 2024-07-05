@@ -5,9 +5,12 @@ import com.project.playit.project.Entity.Audio;
 import com.project.playit.project.Exception.AudioFileNotFoundException;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface AudioService {
     public Audio uploadAudioFile(AudioUploadRequest request);
 
     public List<Audio> getAudioListFromAudioName(String audioName, int page, int size) throws AudioFileNotFoundException;
+
+    public Audio getAudioByID(UUID ID);
 }
