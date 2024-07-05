@@ -47,7 +47,7 @@ public class Audio {
     @NotNull(message = "genre cannot be null")
     @NotBlank(message = "genre cannot be empty")
     @Enumerated(EnumType.STRING)
-    private Genre genres;
+    private Genre genre;
 
     @NotNull(message = "genre cannot be null")
     @NotBlank(message = "genre cannot be empty")
