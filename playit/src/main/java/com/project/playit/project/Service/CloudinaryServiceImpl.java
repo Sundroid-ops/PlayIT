@@ -20,12 +20,17 @@ public class CloudinaryServiceImpl implements CloudinaryService{
     private Cloudinary cloudinary;
 
     @Override
-    public String uploadAudioFile(MultipartFile file, String audioName) {
+    public Map<String, String> uploadAudioFile(MultipartFile file, String audioName) {
         try {
             Map<String, Object> uploadFile = cloudinary.uploader().upload(file.getBytes(),
                     ObjectUtils.asMap("resource_type", "auto",
-                                    "public_id", audioName));
-            return uploadFile.get("secure_url").toString();
+                            "context", "custom_name=" + audioName));
+
+            Map<String, String> uploadFileData = new HashMap<>();
+            uploadFileData.put("file_url",uploadFile.get("secure_url").toString());
+            uploadFileData.put("public_id", uploadFile.get("public_id").toString());
+
+            return uploadFileData;
 
         }catch (IOException e){
             e.printStackTrace();
