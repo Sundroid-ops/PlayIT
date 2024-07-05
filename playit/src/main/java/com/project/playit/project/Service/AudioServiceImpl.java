@@ -41,9 +41,8 @@ public class AudioServiceImpl implements AudioService {
     }
 
     @Override
-    public List<Audio> getAudioListFromAudioName(String audioName) throws AudioFileNotFoundException {
-        List<Audio> audioList = audioRepository.findAllByAudioNameContainingIgnoreCase(audioName);
     public List<Audio> getAudioListFromAudioName(String audioName, int page, int size) throws AudioFileNotFoundException {
+        List<Audio> audioList = audioRepository.findAllByAudioNameContainingIgnoreCase(audioName, PageRequest.of(page, size));
 
         if(audioList.isEmpty())
             throw new AudioFileNotFoundException("Audio Not Found");
