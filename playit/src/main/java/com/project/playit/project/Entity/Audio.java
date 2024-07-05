@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -42,4 +43,9 @@ public class Audio {
             referencedColumnName = "userID"
     )
     private User user_upload;
+
+    @NotNull(message = "genre cannot be null")
+    @NotBlank(message = "genre cannot be empty")
+    @Enumerated(EnumType.STRING)
+    private Genre genres;
 }
