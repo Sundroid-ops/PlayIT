@@ -24,4 +24,10 @@ public class AudioController {
     public ResponseEntity<Audio> uploadUserAudioFile(AudioUploadRequest request){
         return ResponseEntity.ok(audioService.uploadAudioFile(request));
     }
+
+    @GetMapping("/")
+    public ResponseEntity<List<Audio>> getAudioListByAudioName(@RequestParam(name = "name") String audioName) throws AudioFileNotFoundException {
+        return ResponseEntity.ok(audioService.getAudioListFromAudioName(audioName));
+    }
+
 }
