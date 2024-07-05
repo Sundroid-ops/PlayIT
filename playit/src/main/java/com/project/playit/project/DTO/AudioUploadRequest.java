@@ -1,5 +1,8 @@
 package com.project.playit.project.DTO;
 
+import com.project.playit.project.Entity.Genre;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -20,4 +23,9 @@ public class AudioUploadRequest {
     @NotNull(message = "name cannot be null")
     @NotBlank(message = "name cannot be empty")
     private MultipartFile file;
+
+    @NotNull(message = "genre cannot be null")
+    @NotBlank(message = "genre cannot be empty")
+    @Enumerated(EnumType.STRING)
+    private Genre genres;
 }
