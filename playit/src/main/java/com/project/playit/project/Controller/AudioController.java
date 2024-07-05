@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/song")
@@ -34,4 +35,8 @@ public class AudioController {
         return ResponseEntity.ok(audioService.getAudioListFromAudioName(audioName, page, size));
     }
 
+    @GetMapping("/{ID}")
+    public ResponseEntity<Audio> getAudioByID(@PathVariable UUID ID){
+        return ResponseEntity.ok(audioService.getAudioByID(ID));
+    }
 }
