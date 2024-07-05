@@ -48,4 +48,9 @@ public class Audio {
     @NotBlank(message = "genre cannot be empty")
     @Enumerated(EnumType.STRING)
     private Genre genres;
+
+    @NotNull(message = "genre cannot be null")
+    @NotBlank(message = "genre cannot be empty")
+    @Temporal(TemporalType.DATE)
+    private Date releaseDate;
 }
