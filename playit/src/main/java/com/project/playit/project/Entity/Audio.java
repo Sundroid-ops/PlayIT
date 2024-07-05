@@ -21,12 +21,12 @@ import java.util.UUID;
 public class Audio {
 
     @Id
-    private UUID songID;
+    private UUID audioID;
 
     @NotBlank(message = "Name cannot be empty")
     @NotNull(message = "name cannot be null")
     @Length(max = 20, message = "name cannot be more than 20 characters")
-    private String Name;
+    private String audioName;
 
     @NotNull(message = "url cannot be null")
     @Column(unique = true)
