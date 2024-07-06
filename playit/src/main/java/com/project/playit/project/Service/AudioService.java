@@ -2,6 +2,7 @@ package com.project.playit.project.Service;
 
 import com.project.playit.project.DTO.AudioUploadRequest;
 import com.project.playit.project.Entity.Audio;
+import com.project.playit.project.Exception.AccessDeniedException;
 import com.project.playit.project.Exception.AudioFileNotFoundException;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface AudioService {
     public List<Audio> getAudioListFromAudioName(String audioName, int page, int size) throws AudioFileNotFoundException;
 
     public Audio getAudioByID(UUID ID);
+    public Audio getAudioByID(UUID audioID) throws AudioFileNotFoundException;
 }
