@@ -3,6 +3,7 @@ package com.project.playit.project.Service;
 import com.project.playit.Auth.Service.CurrentUserService;
 import com.project.playit.project.DTO.AudioUploadRequest;
 import com.project.playit.project.Entity.Audio;
+import com.project.playit.project.Entity.Genre;
 import com.project.playit.project.Exception.AccessDeniedException;
 import com.project.playit.project.Exception.AudioFileNotFoundException;
 import com.project.playit.project.Repository.AudioRepository;
@@ -50,7 +51,8 @@ public class AudioServiceImpl implements AudioService {
     }
 
     @Override
-    public List<Audio> getAudioListFromAudioName(String audioName, int page, int size) throws AudioFileNotFoundException {
+    public List<Audio> getAudioListFromAudioName(String audioName, int page, int size)
+            throws AudioFileNotFoundException {
         List<Audio> audioList = audioRepository.findAllByAudioNameContainingIgnoreCase(audioName, PageRequest.of(page, size));
 
         if(audioList.isEmpty())
@@ -60,13 +62,15 @@ public class AudioServiceImpl implements AudioService {
     }
 
     @Override
-    public Audio getAudioByID(UUID audioID) throws AudioFileNotFoundException{
+    public Audio getAudioByID(UUID audioID)
+            throws AudioFileNotFoundException{
             return audioRepository.findById(audioID)
                     .orElseThrow((() -> new AudioFileNotFoundException("Audio Not Found for ID : " + audioID)));
     }
 
     @Override
-    public void deleteAudioByID(UUID audioID) throws AudioFileNotFoundException, AccessDeniedException {
+    public void deleteAudioByID(UUID audioID)
+            throws AudioFileNotFoundException, AccessDeniedException {
             Audio audio = getAudioByID(audioID);
 
             if(!audio.getUser_upload().getUsername()
@@ -82,5 +86,33 @@ public class AudioServiceImpl implements AudioService {
                 e.printStackTrace();
                 throw new RuntimeException("An unexpected error occurred while performing the operation\", e");
             }
+    }
+
+    @Override
+    public Audio updateAudioByID(UUID audioID, String audioName, Genre genre)
+            throws AudioFileNotFoundException, AccessDeniedException{
+
+        if(audioName.isEmpty() && genre == null)
+            throw new AccessDeniedException("At least one of the fields must be non-empty");
+
+        Audio audio = getAudioByID(audioID);
+
+        if(!audio.getUser_upload().getUsername()
+                .equals(currentUserService.getCurrentUser().getUsername()))
+            throw new AccessDeniedException("You do not have permission to make changes  this content");
+
+        if(!audioName.isEmpty())
+            audio.setAudioName(audioName);
+
+        if(genre != null)
+            audio.setGenre(genre);
+
+        try {
+            return audioRepository.save(audio);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("An unexpected error occurred while performing the operation", e);
+        }
     }
 }
