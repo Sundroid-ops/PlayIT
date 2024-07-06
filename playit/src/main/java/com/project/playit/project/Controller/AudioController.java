@@ -19,7 +19,7 @@ public class AudioController {
     private AudioService audioService;
 
     @PostMapping("/upload")
-    public ResponseEntity<Audio> uploadUserAudioFile(AudioUploadRequest request){
+    public ResponseEntity<Audio> uploadUserAudioFile(AudioUploadRequest request) {
         return ResponseEntity.ok(audioService.uploadAudioFile(request));
     }
 
@@ -32,13 +32,16 @@ public class AudioController {
         return ResponseEntity.ok(audioService.getAudioListFromAudioName(audioName, page, size));
     }
 
-    @GetMapping("/{ID}")
-    public ResponseEntity<Audio> getAudioByID(@PathVariable UUID ID){
-        return ResponseEntity.ok(audioService.getAudioByID(ID));
     @GetMapping("/{audioID}")
     public ResponseEntity<Audio> getAudioByID(@PathVariable UUID audioID)
             throws AudioFileNotFoundException{
         return ResponseEntity.ok(audioService.getAudioByID(audioID));
     }
+
+    @DeleteMapping("/{audioID}")
+    public ResponseEntity<String> deleteAudioByID(@PathVariable UUID audioID)
+            throws AudioFileNotFoundException, AccessDeniedException {
+        audioService.deleteAudioByID(audioID);
+        return ResponseEntity.ok("Audio ID " + audioID + " Deleted Successfully");
     }
 }
