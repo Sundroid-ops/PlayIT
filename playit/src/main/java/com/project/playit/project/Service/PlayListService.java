@@ -7,4 +7,5 @@ import java.util.UUID;
 public interface PlayListService {
     public PlayList createPlayList(String playListName);
 
+    public PlayList getPlayListByID(UUID playListID);
 }
