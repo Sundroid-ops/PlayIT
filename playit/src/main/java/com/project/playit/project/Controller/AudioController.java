@@ -4,12 +4,9 @@ import com.project.playit.project.DTO.AudioUploadRequest;
 import com.project.playit.project.Entity.Audio;
 import com.project.playit.project.Exception.AudioFileNotFoundException;
 import com.project.playit.project.Service.AudioService;
-import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -38,5 +35,10 @@ public class AudioController {
     @GetMapping("/{ID}")
     public ResponseEntity<Audio> getAudioByID(@PathVariable UUID ID){
         return ResponseEntity.ok(audioService.getAudioByID(ID));
+    @GetMapping("/{audioID}")
+    public ResponseEntity<Audio> getAudioByID(@PathVariable UUID audioID)
+            throws AudioFileNotFoundException{
+        return ResponseEntity.ok(audioService.getAudioByID(audioID));
+    }
     }
 }

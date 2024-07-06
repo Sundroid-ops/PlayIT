@@ -13,6 +13,7 @@ public interface AudioService {
 
     public List<Audio> getAudioListFromAudioName(String audioName, int page, int size) throws AudioFileNotFoundException;
 
-    public Audio getAudioByID(UUID ID);
     public Audio getAudioByID(UUID audioID) throws AudioFileNotFoundException;
+
+    public void deleteAudioByID(UUID audioID) throws AudioFileNotFoundException, AccessDeniedException;
 }

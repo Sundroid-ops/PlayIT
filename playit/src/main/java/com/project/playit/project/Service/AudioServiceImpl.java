@@ -59,12 +59,27 @@ public class AudioServiceImpl implements AudioService {
     }
 
     @Override
-    public Audio getAudioByID(UUID ID) {
-        return audioRepository.findById(ID)
-                .orElseThrow((() -> new UsernameNotFoundException("Audio Not Found for ID : " + ID)));
     public Audio getAudioByID(UUID audioID) throws AudioFileNotFoundException{
             return audioRepository.findById(audioID)
                     .orElseThrow((() -> new AudioFileNotFoundException("Audio Not Found for ID : " + audioID)));
     }
+
+    @Override
+    public void deleteAudioByID(UUID audioID) throws AudioFileNotFoundException, AccessDeniedException{
+            Audio audio = getAudioByID(audioID);
+
+            if(!audio.getUser_upload().getUsername()
+                .equals(currentUserService.getCurrentUser().getUsername()))
+                    throw new AccessDeniedException("You do not have permission to delete this content");
+
+            try{
+                cloudinaryService.deleteAudioFile(audio.getCloudinary_file_public_id());
+
+                audioRepository.delete(audio);
+
+            }catch (Exception e){
+                e.printStackTrace();
+                throw new RuntimeException("An unexpected error occurred while performing the operation\", e");
+            }
     }
 }
