@@ -2,6 +2,7 @@ package com.project.playit.project.Service;
 
 import com.project.playit.project.DTO.AudioUploadRequest;
 import com.project.playit.project.Entity.Audio;
+import com.project.playit.project.Entity.Genre;
 import com.project.playit.project.Exception.AccessDeniedException;
 import com.project.playit.project.Exception.AudioFileNotFoundException;
 
@@ -16,4 +17,6 @@ public interface AudioService {
     public Audio getAudioByID(UUID audioID) throws AudioFileNotFoundException;
 
     public void deleteAudioByID(UUID audioID) throws AudioFileNotFoundException, AccessDeniedException;
+
+    public Audio updateAudioByID(UUID audioID, String audioName, Genre genre) throws AudioFileNotFoundException, AccessDeniedException;
 }
