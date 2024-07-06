@@ -75,7 +75,7 @@ public class AudioServiceImpl implements AudioService {
 
             if(!audio.getUser_upload().getUsername()
                 .equals(currentUserService.getCurrentUser().getUsername()))
-                    throw new AccessDeniedException("You do not have permission to delete this content");
+                    throw new AccessDeniedException("You do not have permission to perform this request on this content");
 
             try{
                 cloudinaryService.deleteAudioFile(audio.getCloudinary_file_public_id());
@@ -99,7 +99,7 @@ public class AudioServiceImpl implements AudioService {
 
         if(!audio.getUser_upload().getUsername()
                 .equals(currentUserService.getCurrentUser().getUsername()))
-            throw new AccessDeniedException("You do not have permission to make changes  this content");
+            throw new AccessDeniedException("You do not have permission to perform this request on this content");
 
         if(!audioName.isEmpty())
             audio.setAudioName(audioName);
