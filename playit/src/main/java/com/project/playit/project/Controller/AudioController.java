@@ -2,6 +2,7 @@ package com.project.playit.project.Controller;
 
 import com.project.playit.project.DTO.AudioUploadRequest;
 import com.project.playit.project.Entity.Audio;
+import com.project.playit.project.Entity.Genre;
 import com.project.playit.project.Exception.AccessDeniedException;
 import com.project.playit.project.Exception.AudioFileNotFoundException;
 import com.project.playit.project.Service.AudioService;
@@ -45,4 +46,15 @@ public class AudioController {
         audioService.deleteAudioByID(audioID);
         return ResponseEntity.ok("Audio ID " + audioID + " Deleted Successfully");
     }
+
+    @PutMapping("/{audioID}")
+    public ResponseEntity<Audio> updateAudioByID(
+            @PathVariable UUID audioID,
+            @RequestParam String audioName,
+            @RequestParam Genre genre
+            ) throws AudioFileNotFoundException {
+        return ResponseEntity.ok(audioService.updateAudioByID(audioID, audioName, genre));
+    }
+
+
 }
