@@ -1,14 +1,11 @@
 package com.project.playit.project.Service;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,9 +29,8 @@ public class CloudinaryServiceImpl implements CloudinaryService{
         return uploadFileData;
     }
 
-        }catch (IOException e){
-            e.printStackTrace();
-            return null;
-        }
+    @Override
+    public void deleteAudioFile(String cloudinaryFilePublicID) throws IOException {
+        System.out.println(cloudinary.uploader().destroy(cloudinaryFilePublicID, ObjectUtils.emptyMap()));
     }
 }
