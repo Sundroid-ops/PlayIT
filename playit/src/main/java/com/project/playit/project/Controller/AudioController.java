@@ -2,6 +2,7 @@ package com.project.playit.project.Controller;
 
 import com.project.playit.project.DTO.AudioUploadRequest;
 import com.project.playit.project.Entity.Audio;
+import com.project.playit.project.Exception.AccessDeniedException;
 import com.project.playit.project.Exception.AudioFileNotFoundException;
 import com.project.playit.project.Service.AudioService;
 import org.springframework.beans.factory.annotation.Autowired;
