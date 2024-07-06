@@ -3,6 +3,7 @@ package com.project.playit.project.Service;
 import com.project.playit.Auth.Service.CurrentUserService;
 import com.project.playit.project.DTO.AudioUploadRequest;
 import com.project.playit.project.Entity.Audio;
+import com.project.playit.project.Exception.AccessDeniedException;
 import com.project.playit.project.Exception.AudioFileNotFoundException;
 import com.project.playit.project.Repository.AudioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class AudioServiceImpl implements AudioService {
     }
 
     @Override
-    public void deleteAudioByID(UUID audioID) throws AudioFileNotFoundException, AccessDeniedException{
+    public void deleteAudioByID(UUID audioID) throws AudioFileNotFoundException, AccessDeniedException {
             Audio audio = getAudioByID(audioID);
 
             if(!audio.getUser_upload().getUsername()
