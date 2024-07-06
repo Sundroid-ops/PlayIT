@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class RestResponseApplicationConfiguration {
 
     @ExceptionHandler(AudioFileNotFoundException.class)
-    public ResponseEntity<ErrorMessage> AudioFileNotFoundException(Exception e){
+    public ResponseEntity<ErrorMessage>  DataNotFoundException(Exception e){
         ErrorMessage error = new ErrorMessage(HttpStatus.NOT_FOUND, e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
