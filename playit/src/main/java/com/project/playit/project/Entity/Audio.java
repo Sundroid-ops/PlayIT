@@ -38,7 +38,6 @@ public class Audio {
     private String cloudinary_file_public_id;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
             optional = false
     )
