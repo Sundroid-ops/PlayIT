@@ -32,7 +32,7 @@ public class PlayListServiceImpl implements PlayListService{
     }
 
     @Override
-    public PlayList getPlayListByID(UUID playListID) {
+    public PlayList getPlayListByID(UUID playListID) throws PlayListNotFoundException{
         return playListRepository.findById(playListID)
                 .orElseThrow(() -> new PlayListNotFoundException("PlayList Not Found for ID : " + playListID));
     }
