@@ -28,11 +28,11 @@ public class AudioServiceImpl implements AudioService {
     private AudioRepository audioRepository;
 
     @Override
-    public Audio uploadAudioFile(AudioUploadRequest request){
+    public Audio uploadAudioFile(AudioUploadRequest request) {
+        try {
+            Map<String, String> uploadFileData =  cloudinaryService.uploadAudioFile(request.getFile(), request.getName());
 
-        Map<String, String> uploadFileData =  cloudinaryService.uploadAudioFile(request.getFile(), request.getName());
-
-        Audio song = Audio.builder()
+            Audio song = Audio.builder()
                 .audioID(UUID.randomUUID())
                 .audioName(request.getName())
                 .cloudinary_file_url(uploadFileData.get("file_url"))
@@ -41,8 +41,12 @@ public class AudioServiceImpl implements AudioService {
                 .genre(request.getGenre())
                 .releaseDate(LocalDate.now())
                 .build();
+            return audioRepository.save(song);
 
-        return audioRepository.save(song);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("An unexpected error occurred while performing the operation\", e");
+        }
     }
 
     @Override
