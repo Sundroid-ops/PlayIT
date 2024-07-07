@@ -35,4 +35,12 @@ public class PlayListController {
             @RequestBody List<UUID> audioIDList) throws PlayListNotFoundException, AudioFileNotFoundException, AccessDeniedException {
         return ResponseEntity.ok(playListService.addAudioFileInPlayList(playListID, audioIDList));
     }
+
+    @DeleteMapping("/{playListID}/song")
+    public ResponseEntity<PlayList> removeAudioFileFromPlayList(
+            @PathVariable UUID playListID,
+            @RequestParam UUID audioID)
+            throws PlayListNotFoundException, AudioFileNotFoundException, AccessDeniedException {
+        return ResponseEntity.ok(playListService.removeAudioFileFromPlayList(playListID, audioID));
+    }
 }
