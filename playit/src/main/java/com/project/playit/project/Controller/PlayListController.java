@@ -25,7 +25,8 @@ public class PlayListController {
     }
 
     @GetMapping("/{playListID}")
-    public ResponseEntity<PlayList> getPlayListByID(@PathVariable UUID playListID) throws PlayListNotFoundException {
+    public ResponseEntity<PlayList> getPlayListByID(@PathVariable UUID playListID)
+            throws PlayListNotFoundException, AccessDeniedException {
         return ResponseEntity.ok(playListService.getPlayListByID(playListID));
     }
 
@@ -42,5 +43,13 @@ public class PlayListController {
             @RequestParam UUID audioID)
             throws PlayListNotFoundException, AudioFileNotFoundException, AccessDeniedException {
         return ResponseEntity.ok(playListService.removeAudioFileFromPlayList(playListID, audioID));
+    }
+
+    @DeleteMapping("/{playListID}")
+    public ResponseEntity<String> removePlayListByID(@PathVariable UUID playListID)
+            throws PlayListNotFoundException{
+        playListService.removePlayListByID(playListID);
+
+        return ResponseEntity.ok("PlayList ID " + playListID + " Deleted Successfully");
     }
 }
