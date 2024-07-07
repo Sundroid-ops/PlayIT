@@ -59,6 +59,10 @@ public class PlayListServiceImpl implements PlayListService{
             throw new AccessDeniedException("You do not have permission to perform this request on this content");
 
         List<Audio> audioList = audioRepository.findAllById(audioListID);
+
+        if (audioList.isEmpty())
+            throw new AudioFileNotFoundException("Audio Not Found");
+
         playList.addAudioList(audioList);
 
         return playListRepository.save(playList);
