@@ -1,12 +1,15 @@
 package com.project.playit.project.Controller;
 
 import com.project.playit.project.Entity.PlayList;
+import com.project.playit.project.Exception.AccessDeniedException;
+import com.project.playit.project.Exception.AudioFileNotFoundException;
 import com.project.playit.project.Exception.PlayListNotFoundException;
 import com.project.playit.project.Service.PlayListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,7 +24,7 @@ public class PlayListController {
         return ResponseEntity.ok(playListService.createPlayList(playListName));
     }
 
-    @GetMapping("/")
+    @GetMapping("/{playListID}")
     public ResponseEntity<PlayList> getPlayListByID(@PathVariable UUID playListID) throws PlayListNotFoundException {
         return ResponseEntity.ok(playListService.getPlayListByID(playListID));
     }
