@@ -60,10 +60,10 @@ public class PlayList {
     @NotNull(message = "creation date cannot be null")
     private LocalDate creationDate;
 
-    public void addAudioList(Audio audio){
+    public void addAudioList(List<Audio> audio){
         if(audioList == null)
             audioList = new LinkedList<>();
 
-        audioList.add(audio);
+        audioList.addAll(audio);
     }
 }
