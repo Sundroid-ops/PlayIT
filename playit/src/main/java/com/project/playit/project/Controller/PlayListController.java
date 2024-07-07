@@ -28,4 +28,11 @@ public class PlayListController {
     public ResponseEntity<PlayList> getPlayListByID(@PathVariable UUID playListID) throws PlayListNotFoundException {
         return ResponseEntity.ok(playListService.getPlayListByID(playListID));
     }
+
+    @PutMapping("/{playListID}")
+    public ResponseEntity<PlayList> addAudioFileInPlayList(
+            @PathVariable UUID playListID,
+            @RequestBody List<UUID> audioIDList) throws PlayListNotFoundException, AudioFileNotFoundException, AccessDeniedException {
+        return ResponseEntity.ok(playListService.addAudioFileInPlayList(playListID, audioIDList));
+    }
 }
