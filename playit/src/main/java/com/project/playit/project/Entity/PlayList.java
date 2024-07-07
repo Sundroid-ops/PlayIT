@@ -66,4 +66,8 @@ public class PlayList {
 
         audioList.addAll(audio);
     }
+
+    public void removeAudioFromAudioList(Audio audio){
+        audioList.remove(audio);
+    }
 }
