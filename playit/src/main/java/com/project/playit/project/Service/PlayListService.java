@@ -18,4 +18,7 @@ public interface PlayListService {
 
     public PlayList removeAudioFileFromPlayList(UUID playListID, UUID audioID)
             throws PlayListNotFoundException, AudioFileNotFoundException, AccessDeniedException;
+
+    public void removePlayListByID(UUID playListID)
+            throws PlayListNotFoundException, AccessDeniedException;
 }

@@ -86,4 +86,16 @@ public class PlayListServiceImpl implements PlayListService{
 
         return playListRepository.save(playList);
     }
+
+    @Override
+    public void removePlayListByID(UUID playListID) throws PlayListNotFoundException, AccessDeniedException {
+        PlayList playList = getPlayListByID(playListID);
+
+        if(!playList.getUser_playList().getUsername()
+                .equals(currentUserService.getCurrentUser().getUsername()))
+            throw new AccessDeniedException("You do not have permission to perform this request on this content");
+
+
+        playListRepository.delete(playList);
+    }
 }
