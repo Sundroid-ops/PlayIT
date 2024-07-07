@@ -67,4 +67,23 @@ public class PlayListServiceImpl implements PlayListService{
 
         return playListRepository.save(playList);
     }
+
+    @Override
+    public PlayList removeAudioFileFromPlayList(UUID playListID, UUID audioID)
+            throws PlayListNotFoundException, AudioFileNotFoundException, AccessDeniedException {
+        PlayList playList = getPlayListByID(playListID);
+
+        if(!playList.getUser_playList().getUsername()
+                .equals(currentUserService.getCurrentUser().getUsername()))
+            throw new AccessDeniedException("You do not have permission to perform this request on this content");
+
+        if(playList.getAudioList().isEmpty())
+            throw new AccessDeniedException("PlayList is empty, You do not have permission to perform this request on this content");
+
+        Audio audio = audioService.getAudioByID(audioID);
+
+        playList.removeAudioFromAudioList(audio);
+
+        return playListRepository.save(playList);
+    }
 }
