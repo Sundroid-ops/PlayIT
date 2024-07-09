@@ -56,5 +56,8 @@ public class AudioController {
         return ResponseEntity.ok(audioService.updateAudioByID(audioID, audioName, genre));
     }
 
-
+    @GetMapping("/all")
+    public ResponseEntity<List<Audio>> getAllAudioFile(@RequestParam int page, @RequestParam int size){
+        return ResponseEntity.ok(audioService.getAllAudioFile(page, size));
+    }
 }
