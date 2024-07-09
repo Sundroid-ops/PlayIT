@@ -9,4 +9,6 @@ public interface AudioCacheService {
     public void saveAudioFile(Audio audio);
 
     public Audio getAudioByID(UUID audioID);
+
+    public void deleteAudioByID(UUID audioID);
 }

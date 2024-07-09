@@ -27,5 +27,8 @@ public class AudioCacheServiceImpl implements AudioCacheService{
         return (Audio) redisTemplate.opsForHash().get(KEY, audioID);
     }
 
-
+    @Override
+    public void deleteAudioByID(UUID audioID) {
+        redisTemplate.opsForHash().delete(KEY, audioID);
+    }
 }
