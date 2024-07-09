@@ -71,8 +71,15 @@ public class AudioServiceImpl implements AudioService {
     @Override
     public Audio getAudioByID(UUID audioID)
             throws AudioFileNotFoundException{
-            return audioRepository.findById(audioID)
-                    .orElseThrow((() -> new AudioFileNotFoundException("Audio Not Found for ID : " + audioID)));
+        Audio audioCache = audioCacheService.getAudioByID(audioID);
+
+        if(audioCache != null)
+            return audioCache;
+
+        Audio audio =  audioRepository.findById(audioID)
+            .orElseThrow((() -> new AudioFileNotFoundException("Audio Not Found for ID : " + audioID)));
+
+        return audioCacheService.saveAudioFile(audio);
     }
 
     @Override
