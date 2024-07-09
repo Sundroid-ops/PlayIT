@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface AudioCacheService {
 
-    public void saveAudioFile(Audio audio);
+    public Audio saveAudioFile(Audio audio);
 
     public Audio getAudioByID(UUID audioID);
 
