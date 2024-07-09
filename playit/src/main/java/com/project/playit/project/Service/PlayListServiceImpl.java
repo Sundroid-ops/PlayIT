@@ -9,6 +9,7 @@ import com.project.playit.project.Exception.PlayListNotFoundException;
 import com.project.playit.project.Repository.AudioRepository;
 import com.project.playit.project.Repository.PlayListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -97,5 +98,16 @@ public class PlayListServiceImpl implements PlayListService{
 
 
         playListRepository.delete(playList);
+    }
+
+    @Override
+    public List<PlayList> getPlayListByName(String playListName, int page, int size) throws PlayListNotFoundException {
+        List<PlayList> playLists = playListRepository.
+                findAllByPlayListNameContainingIgnoreCase(playListName, PageRequest.of(page, size));
+
+        if(playLists.isEmpty())
+            throw new PlayListNotFoundException("No playlist found");
+
+        return playLists;
     }
 }

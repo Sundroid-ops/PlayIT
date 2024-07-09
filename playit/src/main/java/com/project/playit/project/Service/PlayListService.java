@@ -21,4 +21,6 @@ public interface PlayListService {
 
     public void removePlayListByID(UUID playListID)
             throws PlayListNotFoundException, AccessDeniedException;
+
+    public List<PlayList> getPlayListByName(String playListName, int page, int size) throws PlayListNotFoundException;
 }
