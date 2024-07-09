@@ -19,4 +19,6 @@ public interface AudioService {
     public void deleteAudioByID(UUID audioID) throws AudioFileNotFoundException, AccessDeniedException;
 
     public Audio updateAudioByID(UUID audioID, String audioName, Genre genre) throws AudioFileNotFoundException, AccessDeniedException;
+
+    public List<Audio> getAllAudioFile(int page, int size);
 }

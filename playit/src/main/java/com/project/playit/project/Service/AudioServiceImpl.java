@@ -115,4 +115,9 @@ public class AudioServiceImpl implements AudioService {
             throw new RuntimeException("An unexpected error occurred while performing the operation", e);
         }
     }
+
+    @Override
+    public List<Audio> getAllAudioFile(int page, int size) {
+        return audioRepository.findAll(PageRequest.of(page, size)).getContent();
+    }
 }
