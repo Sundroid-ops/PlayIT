@@ -5,6 +5,7 @@ import com.project.playit.Auth.DTO.RegisterRequest;
 import com.project.playit.Auth.Service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/authenticate")
-    public Map<String, String> authenticate(@Valid @RequestBody AuthenticateRequest request){
+    public Map<String, String> authenticate(@Valid @RequestBody AuthenticateRequest request) throws UsernameNotFoundException{
         return authService.authenticate(request);
     }
 }
