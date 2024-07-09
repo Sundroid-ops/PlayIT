@@ -52,4 +52,12 @@ public class PlayListController {
 
         return ResponseEntity.ok("PlayList ID " + playListID + " Deleted Successfully");
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<PlayList>> getPlayListByName(
+            @RequestParam String playListName,
+            @RequestParam int page,
+            @RequestParam int size) throws PlayListNotFoundException{
+        return ResponseEntity.ok(playListService.getPlayListByName(playListName, page, size));
+    }
 }
