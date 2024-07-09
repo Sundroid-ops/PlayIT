@@ -23,4 +23,6 @@ public interface PlayListService {
             throws PlayListNotFoundException, AccessDeniedException;
 
     public List<PlayList> getPlayListByName(String playListName, int page, int size) throws PlayListNotFoundException;
+
+    public List<PlayList> getAllplayList(int page, int size);
 }

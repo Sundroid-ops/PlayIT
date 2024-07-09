@@ -110,4 +110,9 @@ public class PlayListServiceImpl implements PlayListService{
 
         return playLists;
     }
+
+    @Override
+    public List<PlayList> getAllplayList(int page, int size) {
+        return playListRepository.findAll(PageRequest.of(page, size)).getContent();
+    }
 }
