@@ -60,4 +60,9 @@ public class PlayListController {
             @RequestParam int size) throws PlayListNotFoundException{
         return ResponseEntity.ok(playListService.getPlayListByName(playListName, page, size));
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<PlayList>> getAllPlayList(@RequestParam int page, @RequestParam int size){
+        return ResponseEntity.ok(playListService.getAllplayList(page, size));
+    }
 }
