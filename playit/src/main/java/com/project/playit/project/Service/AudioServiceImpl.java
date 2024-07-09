@@ -49,9 +49,7 @@ public class AudioServiceImpl implements AudioService {
 
             audioRepository.save(audio);
 
-            audioCacheService.saveAudioFile(audio);
-
-            return audio;
+            return audioCacheService.saveAudioFile(audio);
 
         }catch (Exception e){
             e.printStackTrace();
