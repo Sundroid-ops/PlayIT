@@ -96,6 +96,8 @@ public class AudioServiceImpl implements AudioService {
 
                 audioRepository.delete(audio);
 
+                audioCacheService.deleteAudioByID(audioID);
+
             }catch (Exception e){
                 e.printStackTrace();
                 throw new RuntimeException("An unexpected error occurred while performing the operation\", e");
