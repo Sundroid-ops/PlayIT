@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -29,8 +31,10 @@ public class AuthServiceImpl implements AuthService{
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    private final static Map<String, String> jwtToken = new HashMap<>();
+
     @Override
-    public String register(RegisterRequest request){
+    public Map<String, String> register(RegisterRequest request){
         User user = User.builder()
                 .userID(UUID.randomUUID())
                 .userName(request.getUserName())
@@ -43,11 +47,13 @@ public class AuthServiceImpl implements AuthService{
 
         userRepository.save(user);
 
-        return jwtService.generateToken(user);
+        jwtToken.put("jwt", jwtService.generateToken(user));
+
+        return jwtToken;
     }
 
     @Override
-    public String authenticate(AuthenticateRequest request) throws UsernameNotFoundException{
+    public Map<String, String> authenticate(AuthenticateRequest request) throws UsernameNotFoundException{
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmailID(),
@@ -58,6 +64,8 @@ public class AuthServiceImpl implements AuthService{
         var user = userRepository.findByEmailID(request.getEmailID())
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
 
-        return jwtService.generateToken(user);
+        jwtToken.put("jwt", jwtService.generateToken(user));
+
+        return jwtToken;
     }
 }

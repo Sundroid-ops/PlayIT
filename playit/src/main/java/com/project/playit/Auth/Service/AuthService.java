@@ -3,8 +3,10 @@ package com.project.playit.Auth.Service;
 import com.project.playit.Auth.DTO.AuthenticateRequest;
 import com.project.playit.Auth.DTO.RegisterRequest;
 
-public interface AuthService {
-    public String register(RegisterRequest request);
+import java.util.Map;
 
-    public String authenticate(AuthenticateRequest request);
+public interface AuthService {
+    public Map<String, String> register(RegisterRequest request);
+
+    public Map<String, String> authenticate(AuthenticateRequest request);
 }
