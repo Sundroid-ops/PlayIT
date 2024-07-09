@@ -122,7 +122,9 @@ public class AudioServiceImpl implements AudioService {
             audio.setGenre(genre);
 
         try {
-            return audioRepository.save(audio);
+            audioRepository.save(audio);
+
+            return audioCacheService.saveAudioFile(audio);
 
         }catch (Exception e){
             e.printStackTrace();
