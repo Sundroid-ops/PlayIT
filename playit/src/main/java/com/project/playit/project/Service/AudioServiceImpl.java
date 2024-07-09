@@ -1,6 +1,7 @@
 package com.project.playit.project.Service;
 
 import com.project.playit.Auth.Service.CurrentUserService;
+import com.project.playit.project.Cache.Service.AudioCacheService;
 import com.project.playit.project.DTO.AudioUploadRequest;
 import com.project.playit.project.Entity.Audio;
 import com.project.playit.project.Entity.Genre;
@@ -28,12 +29,15 @@ public class AudioServiceImpl implements AudioService {
     @Autowired
     private AudioRepository audioRepository;
 
+    @Autowired
+    private AudioCacheService audioCacheService;
+
     @Override
     public Audio uploadAudioFile(AudioUploadRequest request) {
         try {
             Map<String, String> uploadFileData =  cloudinaryService.uploadAudioFile(request.getFile(), request.getName());
 
-            Audio song = Audio.builder()
+            Audio audio = Audio.builder()
                 .audioID(UUID.randomUUID())
                 .audioName(request.getName())
                 .cloudinary_file_url(uploadFileData.get("file_url"))
@@ -42,7 +46,10 @@ public class AudioServiceImpl implements AudioService {
                 .genre(request.getGenre())
                 .releaseDate(LocalDate.now())
                 .build();
-            return audioRepository.save(song);
+
+            audioRepository.save(audio);
+
+            return audioCacheService.saveAudioFile(audio);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -64,8 +71,15 @@ public class AudioServiceImpl implements AudioService {
     @Override
     public Audio getAudioByID(UUID audioID)
             throws AudioFileNotFoundException{
-            return audioRepository.findById(audioID)
-                    .orElseThrow((() -> new AudioFileNotFoundException("Audio Not Found for ID : " + audioID)));
+        Audio audioCache = audioCacheService.getAudioByID(audioID);
+
+        if(audioCache != null)
+            return audioCache;
+
+        Audio audio =  audioRepository.findById(audioID)
+            .orElseThrow((() -> new AudioFileNotFoundException("Audio Not Found for ID : " + audioID)));
+
+        return audioCacheService.saveAudioFile(audio);
     }
 
     @Override

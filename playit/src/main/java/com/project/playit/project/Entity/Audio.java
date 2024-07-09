@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "_song")
 @Validated
-public class Audio {
+public class Audio implements Serializable {
 
     @Id
     private UUID audioID;

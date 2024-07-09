@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "_playlist")
 @Validated
-public class PlayList {
+public class PlayList implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID playListID;
