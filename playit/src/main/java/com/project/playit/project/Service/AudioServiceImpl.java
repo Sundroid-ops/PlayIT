@@ -1,6 +1,7 @@
 package com.project.playit.project.Service;
 
 import com.project.playit.Auth.Service.CurrentUserService;
+import com.project.playit.project.Cache.Service.AudioCacheService;
 import com.project.playit.project.DTO.AudioUploadRequest;
 import com.project.playit.project.Entity.Audio;
 import com.project.playit.project.Entity.Genre;
@@ -28,12 +29,15 @@ public class AudioServiceImpl implements AudioService {
     @Autowired
     private AudioRepository audioRepository;
 
+    @Autowired
+    private AudioCacheService audioCacheService;
+
     @Override
     public Audio uploadAudioFile(AudioUploadRequest request) {
         try {
             Map<String, String> uploadFileData =  cloudinaryService.uploadAudioFile(request.getFile(), request.getName());
 
-            Audio song = Audio.builder()
+            Audio audio = Audio.builder()
                 .audioID(UUID.randomUUID())
                 .audioName(request.getName())
                 .cloudinary_file_url(uploadFileData.get("file_url"))
@@ -43,7 +47,11 @@ public class AudioServiceImpl implements AudioService {
                 .releaseDate(LocalDate.now())
                 .build();
 
-            return audioRepository.save(song);
+            audioRepository.save(audio);
+
+            audioCacheService.saveAudioFile(audio);
+
+            return audio;
 
         }catch (Exception e){
             e.printStackTrace();
