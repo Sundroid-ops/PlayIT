@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +43,7 @@ public class PlayListServiceImpl implements PlayListService{
                 .playListName(playListName)
                 .creationDate(LocalDate.now())
                 .user_playList(currentUserService.getCurrentUser())
+                .audioSet(new HashSet<>())
                 .build();
 
         playListRepository.save(playList);
@@ -77,9 +79,11 @@ public class PlayListServiceImpl implements PlayListService{
         if (audioList.isEmpty())
             throw new AudioFileNotFoundException("Audio Not Found");
 
-        playList.addAudioList(audioList);
+        playList.addAudioSet(audioList);
 
-        return playListRepository.save(playList);
+        PlayList playListCache = playListRepository.save(playList);
+
+        return playListCacheService.savePlayList(playListCache);
     }
 
     @Override
@@ -91,12 +95,12 @@ public class PlayListServiceImpl implements PlayListService{
                 .equals(currentUserService.getCurrentUser().getUsername()))
             throw new AccessDeniedException("You do not have permission to perform this request on this content");
 
-        if(playList.getAudioList().isEmpty())
+        if(playList.getAudioSet().isEmpty())
             throw new AccessDeniedException("PlayList is empty, You do not have permission to perform this request on this content");
 
         Audio audio = audioService.getAudioByID(audioID);
 
-        playList.removeAudioFromAudioList(audio);
+        playList.removeAudioFromSet(audio);
 
         return playListRepository.save(playList);
     }
