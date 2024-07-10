@@ -51,8 +51,15 @@ public class PlayListServiceImpl implements PlayListService{
 
     @Override
     public PlayList getPlayListByID(UUID playListID) throws PlayListNotFoundException{
-        return playListRepository.findById(playListID)
+        PlayList playListCache = playListCacheService.getPlayListByID(playListID);
+
+        if(playListCache != null)
+            return playListCache;
+
+        PlayList playList = playListRepository.findById(playListID)
                 .orElseThrow(() -> new PlayListNotFoundException("PlayList Not Found for ID : " + playListID));
+
+        return playListCacheService.savePlayList(playList);
     }
 
     @Override
