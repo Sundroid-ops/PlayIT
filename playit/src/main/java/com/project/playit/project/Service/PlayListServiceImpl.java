@@ -1,6 +1,7 @@
 package com.project.playit.project.Service;
 
 import com.project.playit.Auth.Service.CurrentUserService;
+import com.project.playit.project.Cache.Service.PlayListCacheService;
 import com.project.playit.project.Entity.Audio;
 import com.project.playit.project.Entity.PlayList;
 import com.project.playit.project.Exception.AccessDeniedException;
@@ -31,6 +32,9 @@ public class PlayListServiceImpl implements PlayListService{
     @Autowired
     private AudioService audioService;
 
+    @Autowired
+    private PlayListCacheService playListCacheService;
+
     @Override
     public PlayList createPlayList(String playListName) {
         PlayList playList = PlayList.builder()
@@ -40,7 +44,9 @@ public class PlayListServiceImpl implements PlayListService{
                 .user_playList(currentUserService.getCurrentUser())
                 .build();
 
-        return playListRepository.save(playList);
+        playListRepository.save(playList);
+
+        return playListCacheService.savePlayList(playList);
     }
 
     @Override
