@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class PlayListCacheServiceImpl implements PlayListCacheService{
 
     @Autowired
-    private RedisTemplate<String, PlayList> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     private final static String KEY = "PLAYLIST";
 

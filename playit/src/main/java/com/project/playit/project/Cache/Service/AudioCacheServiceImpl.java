@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class AudioCacheServiceImpl implements AudioCacheService{
 
     @Autowired
-    private RedisTemplate<String, Audio> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     private final static String KEY = "AUDIO";
 
