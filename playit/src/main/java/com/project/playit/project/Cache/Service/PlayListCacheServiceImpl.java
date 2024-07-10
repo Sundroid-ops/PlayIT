@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -20,5 +21,10 @@ public class PlayListCacheServiceImpl implements PlayListCacheService{
         redisTemplate.opsForHash().put(KEY, playList.getPlayListID(), playList);
         //redisTemplate.expire(KEY, 10, TimeUnit.MINUTES);
         return playList;
+    }
+
+    @Override
+    public PlayList getPlayListByID(UUID playListID) {
+        return (PlayList) redisTemplate.opsForHash().get(KEY, playListID);
     }
 }
