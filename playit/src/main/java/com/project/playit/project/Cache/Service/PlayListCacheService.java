@@ -9,4 +9,6 @@ public interface PlayListCacheService {
     public PlayList savePlayList(PlayList playList);
 
     public PlayList getPlayListByID(UUID playListID);
+
+    public void deletePlayListByID(UUID playListID);
 }

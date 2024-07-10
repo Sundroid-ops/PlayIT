@@ -27,4 +27,9 @@ public class PlayListCacheServiceImpl implements PlayListCacheService{
     public PlayList getPlayListByID(UUID playListID) {
         return (PlayList) redisTemplate.opsForHash().get(KEY, playListID);
     }
+
+    @Override
+    public void deletePlayListByID(UUID playListID) {
+        redisTemplate.opsForHash().delete(KEY, playListID);
+    }
 }
