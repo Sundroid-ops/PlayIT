@@ -10,9 +10,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -33,6 +31,7 @@ public class PlayList implements Serializable {
     private String playListName;
 
     @ManyToMany(
+            cascade = CascadeType.MERGE,
             fetch = FetchType.EAGER
     )
     @JoinTable(
@@ -46,7 +45,7 @@ public class PlayList implements Serializable {
                     referencedColumnName = "audioID"
             )
     )
-    private List<Audio> audioList;
+    private Set<Audio> audioSet;
 
     @ManyToOne(
             fetch = FetchType.EAGER,
@@ -61,14 +60,15 @@ public class PlayList implements Serializable {
     @NotNull(message = "creation date cannot be null")
     private LocalDate creationDate;
 
-    public void addAudioList(List<Audio> audio){
-        if(audioList == null)
-            audioList = new LinkedList<>();
 
-        audioList.addAll(audio);
+    public void addAudioSet(List<Audio> audio){
+        if(audioSet == null)
+            audioSet = new HashSet<>();
+
+        audioSet.addAll(audio);
     }
 
-    public void removeAudioFromAudioList(Audio audio){
-        audioList.remove(audio);
+    public void removeAudioFromSet(Audio audio){
+        audioSet.remove(audio);
     }
 }
