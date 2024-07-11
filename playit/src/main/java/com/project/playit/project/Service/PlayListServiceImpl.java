@@ -98,7 +98,6 @@ public class PlayListServiceImpl implements PlayListService{
                 .equals(currentUserService.getCurrentUser().getUsername()))
             throw new AccessDeniedException("You do not have permission to perform this request on this content");
 
-
         playListRepository.delete(playList);
     }
 
