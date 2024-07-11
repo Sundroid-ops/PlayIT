@@ -61,24 +61,14 @@ public class PlayList implements Serializable {
     private LocalDate creationDate;
 
 
-    public void addAudioSet(List<Audio> audioList){
-        audioSet.addAll(audioList);
+    public void addAudioSet(List<Audio> audio){
+        if(audioSet == null)
+            audioSet = new HashSet<>();
+
+        audioSet.addAll(audio);
     }
 
     public void removeAudioFromSet(Audio audio){
         audioSet.remove(audio);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PlayList playList = (PlayList) o;
-        return Objects.equals(playListID, playList.playListID);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(playListID);
     }
 }

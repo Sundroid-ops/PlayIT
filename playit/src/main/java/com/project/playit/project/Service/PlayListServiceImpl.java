@@ -1,7 +1,6 @@
 package com.project.playit.project.Service;
 
 import com.project.playit.Auth.Service.CurrentUserService;
-import com.project.playit.project.Cache.Service.PlayListCacheService;
 import com.project.playit.project.Entity.Audio;
 import com.project.playit.project.Entity.PlayList;
 import com.project.playit.project.Exception.AccessDeniedException;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,9 +31,6 @@ public class PlayListServiceImpl implements PlayListService{
     @Autowired
     private AudioService audioService;
 
-    @Autowired
-    private PlayListCacheService playListCacheService;
-
     @Override
     public PlayList createPlayList(String playListName) {
         PlayList playList = PlayList.builder()
@@ -43,25 +38,16 @@ public class PlayListServiceImpl implements PlayListService{
                 .playListName(playListName)
                 .creationDate(LocalDate.now())
                 .user_playList(currentUserService.getCurrentUser())
-                .audioSet(new HashSet<>())
                 .build();
 
-        playListRepository.save(playList);
-
-        return playListCacheService.savePlayList(playList);
+        return playListRepository.save(playList);
     }
 
     @Override
     public PlayList getPlayListByID(UUID playListID) throws PlayListNotFoundException{
-        PlayList playListCache = playListCacheService.getPlayListByID(playListID);
-
-        if(playListCache != null)
-            return playListCache;
-
-        PlayList playList = playListRepository.findById(playListID)
+        return playListRepository.findById(playListID)
                 .orElseThrow(() -> new PlayListNotFoundException("PlayList Not Found for ID : " + playListID));
 
-        return playListCacheService.savePlayList(playList);
     }
 
     @Override
@@ -81,9 +67,7 @@ public class PlayListServiceImpl implements PlayListService{
 
         playList.addAudioSet(audioList);
 
-        PlayList playListCache = playListRepository.save(playList);
-
-        return playListCacheService.savePlayList(playListCache);
+        return playListRepository.save(playList);
     }
 
     @Override
@@ -98,7 +82,8 @@ public class PlayListServiceImpl implements PlayListService{
         if(playList.getAudioSet().isEmpty())
             throw new AccessDeniedException("PlayList is empty, You do not have permission to perform this request on this content");
 
-        Audio audio = audioService.getAudioByID(audioID);
+        Audio audio = audioRepository.findById(audioID)
+                        .orElseThrow(() -> new AudioFileNotFoundException("Audio Not Found"));
 
         playList.removeAudioFromSet(audio);
 
