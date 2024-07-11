@@ -47,6 +47,7 @@ public class PlayListServiceImpl implements PlayListService{
     public PlayList getPlayListByID(UUID playListID) throws PlayListNotFoundException{
         return playListRepository.findById(playListID)
                 .orElseThrow(() -> new PlayListNotFoundException("PlayList Not Found for ID : " + playListID));
+
     }
 
     @Override
@@ -64,7 +65,7 @@ public class PlayListServiceImpl implements PlayListService{
         if (audioList.isEmpty())
             throw new AudioFileNotFoundException("Audio Not Found");
 
-        playList.addAudioList(audioList);
+        playList.addAudioSet(audioList);
 
         return playListRepository.save(playList);
     }
@@ -78,12 +79,13 @@ public class PlayListServiceImpl implements PlayListService{
                 .equals(currentUserService.getCurrentUser().getUsername()))
             throw new AccessDeniedException("You do not have permission to perform this request on this content");
 
-        if(playList.getAudioList().isEmpty())
+        if(playList.getAudioSet().isEmpty())
             throw new AccessDeniedException("PlayList is empty, You do not have permission to perform this request on this content");
 
-        Audio audio = audioService.getAudioByID(audioID);
+        Audio audio = audioRepository.findById(audioID)
+                        .orElseThrow(() -> new AudioFileNotFoundException("Audio Not Found"));
 
-        playList.removeAudioFromAudioList(audio);
+        playList.removeAudioFromSet(audio);
 
         return playListRepository.save(playList);
     }
