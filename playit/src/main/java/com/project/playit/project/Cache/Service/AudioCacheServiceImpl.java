@@ -19,7 +19,7 @@ public class AudioCacheServiceImpl implements AudioCacheService{
     @Override
     public Audio saveAudioFile(Audio audio) {
         redisTemplate.opsForHash().put(KEY, audio.getAudioID(), audio);
-        //redisTemplate.expire(KEY, 10, TimeUnit.MINUTES);
+        redisTemplate.expire(KEY, 10, TimeUnit.MINUTES);
         return audio;
     }
 
