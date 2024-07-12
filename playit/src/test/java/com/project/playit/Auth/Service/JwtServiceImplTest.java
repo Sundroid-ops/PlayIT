@@ -2,6 +2,7 @@ package com.project.playit.Auth.Service;
 
 import com.project.playit.Auth.Entity.User.Role;
 import com.project.playit.Auth.Entity.User.User;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -29,6 +30,8 @@ class JwtServiceImplTest {
     private PasswordEncoder passwordEncoder;
 
     private String jwt;
+
+    private Claims extractInfoFromJWT;
 
     private final static String secret_key =
             "B374A26A71490437AA024E4FADD5B497FDFF1A8EA6FF12F6FB65AF2720B59CCF";
@@ -64,23 +67,29 @@ class JwtServiceImplTest {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+
+        extractInfoFromJWT = Jwts
+                .parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jwt)
+                .getBody();
     }
 
     @Test
     void extractUserName(){
+        Mockito.when(jwtService.extractUserName(jwt))
+                .thenReturn(user.getUsername());
 
-    }
+        String userName = jwtService.extractUserName(jwt);
 
-    @Test
-    void extractClaim() {
-    }
-
-    @Test
-    void isTokenValid() {
+        assertEquals(userName, "sam@gmail.com");
     }
 
     @Test
     void isTokenExpiration() {
+        assertTrue(extractInfoFromJWT.getExpiration()
+                .after(new Date(System.currentTimeMillis())));
     }
 
     @Test
@@ -100,6 +109,7 @@ class JwtServiceImplTest {
 
     @Test
     void extractAllClaims() {
-
+        assertNotNull(extractInfoFromJWT);
+        assertEquals(extractInfoFromJWT.getSubject(), user.getEmailID());
     }
 }
