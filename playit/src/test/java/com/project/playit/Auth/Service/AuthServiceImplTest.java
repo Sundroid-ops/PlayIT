@@ -10,8 +10,11 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -79,6 +82,28 @@ class AuthServiceImplTest {
 
     @Test
     void authenticate() {
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(
+                        user.getEmailID(),
+                        password
+                );
 
+        assertEquals(authenticationToken.getName(), user.getEmailID());
+
+        Mockito.when(userRepository.findByEmailID(user.getEmailID()))
+                .thenReturn(Optional.ofNullable(user));
+
+        User fetchUser = userRepository.findByEmailID(user.getEmailID()).get();
+
+        assertEquals(fetchUser.getUserID(), user.getUserID());
+        assertEquals(fetchUser.getEmailID(), user.getEmailID());
+
+        UsernameNotFoundException usernameNotFoundException =
+                assertThrows(UsernameNotFoundException.class, () -> {
+                    userRepository.findByEmailID("notFound@gmail.com")
+                            .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
+                });
+
+        assertEquals(usernameNotFoundException.getLocalizedMessage(), "User Not Found");
     }
 }
