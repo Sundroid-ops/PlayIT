@@ -64,9 +64,6 @@ class JwtServiceImplTest {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-
-        Mockito.when(jwtService.generateToken(user))
-                .thenReturn(jwt);
     }
 
     @Test
@@ -88,6 +85,9 @@ class JwtServiceImplTest {
 
     @Test
     void generateToken(){
+        Mockito.when(jwtService.generateToken(user))
+                .thenReturn(jwt);
+
         String jwts = jwtService.generateToken(user);
         assertNotNull(jwts);
         assertEquals(jwts, jwt);
