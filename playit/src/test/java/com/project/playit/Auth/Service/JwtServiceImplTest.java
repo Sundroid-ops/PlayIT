@@ -92,4 +92,14 @@ class JwtServiceImplTest {
         assertNotNull(jwts);
         assertEquals(jwts, jwt);
     }
+
+    @Test
+    void getSignInKey() {
+        assertNotNull(key);
+    }
+
+    @Test
+    void extractAllClaims() {
+
+    }
 }
