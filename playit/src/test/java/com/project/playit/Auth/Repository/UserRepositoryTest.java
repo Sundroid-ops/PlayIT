@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,5 +43,11 @@ class UserRepositoryTest {
     void findUserByValidEmailID() {
         User fetchUser = userRepository.findByEmailID("sam@gmail.com").get();
         assertEquals(fetchUser.getUsername(), user.getUsername());
+    }
+
+    @Test
+    void CheckNotRegisteredEmailID(){
+        Optional<User> fetchUser = userRepository.findByEmailID("sam");
+        assertEquals(Optional.empty(), fetchUser);
     }
 }
