@@ -1,5 +1,6 @@
 package com.project.playit.Auth.Controller;
 
+import com.project.playit.Auth.DTO.AuthenticateRequest;
 import com.project.playit.Auth.DTO.RegisterRequest;
 import com.project.playit.Auth.Filter.JwtAuthFilter;
 import com.project.playit.Auth.Service.AuthService;
@@ -37,6 +38,10 @@ class AuthControllerTest {
 
     private RegisterRequest registerRequest;
 
+    private AuthenticateRequest authenticateRequest;
+
+    Map<String, String> jwtToken = new HashMap<>();
+
     @BeforeEach
     void setUp() {
         registerRequest = new RegisterRequest();
@@ -50,13 +55,17 @@ class AuthControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .addFilter(new JwtAuthFilter())
                 .build();
+
+        jwtToken.put("jwt", "token");
+
+        authenticateRequest = new AuthenticateRequest();
+
+        authenticateRequest.setEmailID("sam@gmail.com");
+        authenticateRequest.setPassword("123456");
     }
 
     @Test
     void register() throws Exception {
-        Map<String, String> jwtToken = new HashMap<>();
-        jwtToken.put("jwt", "token");
-
         Mockito.when(authService.register(registerRequest))
                 .thenReturn(jwtToken);
 
@@ -75,6 +84,19 @@ class AuthControllerTest {
     }
 
     @Test
-    void authenticate() {
+    void authenticate() throws Exception {
+        Mockito.when(authService.authenticate(authenticateRequest))
+                .thenReturn(jwtToken);
+
+        mockMvc.perform(post("/api/auth/authenticate")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n" +
+                        "    \"emailID\": \"sam@gmail.com\",\n" +
+                        "    \"password\": \"123456\"\n" +
+                        "}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.jwt")
+                        .value("token"));
+
     }
 }
