@@ -1,0 +1,28 @@
+server:
+  port: 5555
+
+jwt:
+  secret:
+    key: "your secret key"
+
+cloudinary:
+  cloud_name: "cloud name"
+  api_key: "api key"
+  api_secret: "api secret"
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: "your password"
+    url: jdbc:mysql://localhost:3306/" your schema "
+    username: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
